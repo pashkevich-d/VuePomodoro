@@ -17,7 +17,7 @@
               <v-btn @click="stop" color="error"
                 ><v-icon left small>mdi-stop-circle-outline</v-icon>Stop</v-btn
               >
-              <v-btn @click="reset"
+              <v-btn @click="reset" :disabled="isRunning"
                 ><v-icon left small>mdi-restart</v-icon>Reset</v-btn
               >
             </div>
@@ -32,6 +32,7 @@
 export default {
   data() {
     return {
+      isRunning: false,
       timerType: 0,
       timerInstance: null,
       totalSeconds: 1500,
@@ -57,11 +58,13 @@ export default {
     },
     start() {
       this.stop();
+      this.isRunning = true;
       this.timerInstance = setInterval(() => {
         this.totalSeconds -= 1;
       }, 1000);
     },
     stop() {
+      this.isRunning = false;
       clearInterval(this.timerInstance);
     },
     reset() {
